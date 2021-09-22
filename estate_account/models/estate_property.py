@@ -17,6 +17,9 @@ class EstateProperty(models.Model):
         # Another way to get the journal:
         # journal = self.env["account.move"].with_context(default_move_type="out_invoice")._get_default_journal()
         for prop in self:
+            print(" reached ".center(100, '='))
+            prop.check_access_rule('write')
+            self.env['account.move'].check_access_rights('create')
             self.env["account.move"].create(
                 {
                     "partner_id": prop.buyer_id.id,
